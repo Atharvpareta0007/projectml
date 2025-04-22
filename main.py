@@ -5,7 +5,17 @@ import numpy as np
 
 #Tensorflow Model Prediction
 def model_prediction(test_image):
-    model = tf.keras.models.load_model("trained_plant_disease_model.keras")
+    import gdown
+import os
+import tensorflow as tf
+
+model_path = "trained_plant_disease_model.keras"
+if not os.path.exists(model_path):
+    url = "https://drive.google.com/uc?id=1m9sixDK_FlFsjjo3lmyMuZZd1LRuRC6K"
+    gdown.download(url, model_path, quiet=False)
+
+model = tf.keras.models.load_model(model_path)
+
     image = tf.keras.preprocessing.image.load_img(test_image,target_size=(128,128))
     input_arr = tf.keras.preprocessing.image.img_to_array(image)
     input_arr = np.array([input_arr]) #convert single image to batch
